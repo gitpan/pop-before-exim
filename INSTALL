@@ -1,0 +1,34 @@
+
+
+This daemon relies on those perl modules:
+	File::Tail
+	AppConfig
+	Sys::Syslog
+	DB_File # not actually used, used to be used 
+	# for creating on-disk-database, but this makes no sense
+	# with small size ( in my setups list of allowed hosts
+	# never grows beyond 20-30 )
+
+
+ Deamon should be run as user capable of reading /var/log/maillog file ( syslog, whatever ),
+best solution would be to create user 'pbe' who would be a member of group 'mail', who would
+own that logfile.
+For example:
+	ls /var/log/mail.log -l
+	-rw-r-----    1 root     mail        971661 Jun 28 18:07 /var/log/mail.log
+	groups pbs
+	pbs : pbs mail
+
+Exim configuration.
+This line 
+	host_accept_relay = "localhost:192.168.0.0/16:lsearch;/var/lib/pop-before-smtp/hosts"
+explains itself;)
+(One should create /var/lib/pop-before-smtp beforehand, and chown pbs.mail it)
+
+
+ 
+pop-before-smtp.conf:
+#my $pat = '^(... .. ..:..:..) \S+ (?:ipop3d|imapd)\[\d+\]: ' .
+#          '(?:Login|Authenticated|Auth) user=(\S+) host=(\S+ )?\[(\d+\.\d+\.\d+\.\d+)\](?: nmsgs=\d+/\d+)?$';
+
+

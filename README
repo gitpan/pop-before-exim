@@ -1,0 +1,6 @@
+
+This is a deamon for watching /var/log/maillog ( /var/log/syslog, or whatever )
+for successful logins using POP or IMAP, and collecting list of hosts that 
+could be authenticated. This database can then be used by MTA ( particularily exim )
+to allow relaying for those hosts.
+
